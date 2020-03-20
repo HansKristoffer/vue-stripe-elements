@@ -39,7 +39,7 @@ function init(key, options = {}) {
   if (window.Stripe === undefined && Stripe.instance === null) {
     console.error('Stripe V3 library not loaded!')
   } else if (Stripe.instance === null) {
-    Stripe.instance = window.Stripe(key)
+    Stripe.instance = window.Stripe(key, { stripeAccount: options.stripeAccount || null })
   }
 
   if (!Stripe.instance.elements) {
@@ -50,7 +50,7 @@ function init(key, options = {}) {
 }
 
 export function create(elementType, key_or_stripe, options = {}) {
-  init(key_or_stripe, options.elements || {})
+  init(key_or_stripe, options.elements || {}, options.stripeAccount)
   options.style = Object.assign({}, options.style || baseStyle)
 
   const element = Stripe.elements.create(elementType, options)
