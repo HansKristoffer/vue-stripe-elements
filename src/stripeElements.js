@@ -31,7 +31,7 @@ export const baseStyle = {
   }
 }
 
-function init(key, options = {}) {
+function init(key, options = {}, stripeAccount) {
   if (typeof key === "object" && typeof key.elements === "function") {
     Stripe.instance = key
   }
@@ -39,7 +39,7 @@ function init(key, options = {}) {
   if (window.Stripe === undefined && Stripe.instance === null) {
     console.error('Stripe V3 library not loaded!')
   } else if (Stripe.instance === null) {
-    Stripe.instance = window.Stripe(key, { stripeAccount: options.stripeAccount || null })
+    Stripe.instance = window.Stripe(key, stripeAccount ? { stripeAccount } : {})
   }
 
   if (!Stripe.instance.elements) {
